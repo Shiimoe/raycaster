@@ -15,6 +15,7 @@
 #define MAP_WIDTH 8
 #define MAP_HEIGHT 8
 #define PI 3.14159265
+#define GRID 100
 
 static const u8 worldMap[MAP_WIDTH][MAP_HEIGHT] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
@@ -76,8 +77,19 @@ struct Player {
 };
 unqualify(struct, Player);
 
+typedef struct Ray {
+    Position pos;
+    Direction dir;
+} Ray;
+
 /////// FUNCTIONS
 // must define prototype first
 int sdl2_init();
 void detection();
 SDL_Rect centrePlayer(SDL_Rect, Position);
+static inline int sgn(int a) {
+    if (a == 0) return 0;
+    if (a > 0) return 1;
+    return -1;
+}
+Ray cast_ray(Position, Direction);
