@@ -34,7 +34,7 @@ ierr init(Arguments args) {
 	Input dir = STOP;
 	bool close_requested = false;
 
-	player.dir.theta = 0 * PI; // Theta = 0 when y = 0 and x = 1, H === 1
+	player.dir.theta = 1.5 * PI; // Theta = 0 when y = 0 and x = 1, H === 1
 
 	// animation loop
 	until (close_requested) {
@@ -129,10 +129,20 @@ ierr init(Arguments args) {
 		};
 		
 		// RAY CASTING
-		// checking for the horizontal x walls, we *know* the y position of the nearest wall, 
-		// we just need to find the x position
 
-		Ray ray = cast_ray(player.pos, player.dir);
+		int i;
+		Direction temp_dir = player.dir;
+		temp_dir.theta -= (FOV/2) * 0.01;
+
+		for (i = 0; i <= FOV; i++) {
+			temp_dir.theta += 0.01;
+			Ray ray = cast_ray(player.pos, temp_dir);
+			
+			SDL_RenderDrawLine(ctx.rend,
+			player.pos.x, player.pos.y,
+			ray.pos.x, ray.pos.y);
+		}
+
 
 
 		// println("%d, %d", (int)ray.pos.x / GRID, (int)ray.pos.y / GRID);
@@ -141,9 +151,6 @@ ierr init(Arguments args) {
 		// printf("%d, %lf\n", (200 % 100), ray.pos.y);
 
 		// drawing the ray
-		SDL_RenderDrawLine(ctx.rend,
-		player.pos.x, player.pos.y,
-		ray.pos.x, ray.pos.y);
 
 
 		

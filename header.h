@@ -16,6 +16,7 @@
 #define PI 3.14159265
 #define GRID 100
 #define PIXEL 1
+#define FOV 90
 
 static const int worldMap[MAP_WIDTH][MAP_HEIGHT] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
