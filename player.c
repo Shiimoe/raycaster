@@ -50,12 +50,16 @@ Ray cast_ray(Position pos, Direction dir)
         }
         if (ray.pos.x > wall.right) {
             ray.pos.x = wall.right;
+            println("%d\n", worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID)]); // determines wall or not
         } else if (ray.pos.x < wall.left) {
             ray.pos.x = wall.left;
+            println("%d\n", worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID) - 1]);
         } else if (ray.pos.y > wall.bottom) {
             ray.pos.y = wall.bottom;
+            println("%d\n", worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID)]);
         } else {
             ray.pos.y = wall.top;
+            println("%d\n", worldMap[(int)ray.pos.y / GRID - 1][((int)ray.pos.x / GRID)]);
         }
     }
     return ray;

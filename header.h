@@ -17,7 +17,7 @@
 #define PI 3.14159265
 #define GRID 100
 
-static const u8 worldMap[MAP_WIDTH][MAP_HEIGHT] = {
+static const int worldMap[MAP_WIDTH][MAP_HEIGHT] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
 	{1, 1, 1, 0, 0, 1, 0, 1},

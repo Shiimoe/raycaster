@@ -136,6 +136,12 @@ ierr init(Arguments args) {
 
 		Ray ray = cast_ray(player.pos, player.dir);
 
+
+		// println("%d, %d", (int)ray.pos.x / GRID, (int)ray.pos.y / GRID);
+		// printf("%d\n", worldMap[(int)(ray.pos.y / GRID)][(int)(ray.pos.x / GRID)]);
+
+		// printf("%d, %lf\n", (200 % 100), ray.pos.y);
+
 		// drawing the ray
 		SDL_RenderDrawLine(ctx.rend,
 		player.pos.x, player.pos.y,
