@@ -1,5 +1,4 @@
 #pragma once
-#define ENTRY_FUNCTION init
 #include <crelude/common.h>
 #include <SDL2/SDL.h>
 #include <stdbool.h>
@@ -16,6 +15,7 @@
 #define MAP_HEIGHT 8
 #define PI 3.14159265
 #define GRID 100
+#define PIXEL 1
 
 static const int worldMap[MAP_WIDTH][MAP_HEIGHT] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},

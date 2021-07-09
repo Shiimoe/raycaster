@@ -7,7 +7,7 @@ SDL_Rect centrePlayer(SDL_Rect rect, Position pos) {
 }
 	
 Ray cast_ray(Position pos, Direction dir) 
-{    
+{
     Ray ray = { 0 };
 
     struct { int x, y; } grid_pos = {(int)pos.x/GRID, (int)pos.y/GRID};
@@ -18,6 +18,14 @@ Ray cast_ray(Position pos, Direction dir)
         grid_pos.y * GRID, 
         (grid_pos.y + 1) * GRID
     };
+
+    if ((pos.x < 0 || pos.x > MAP_WIDTH * GRID) 
+     || (pos.y < 0 || pos.y > MAP_HEIGHT * GRID)) {
+        ray.pos.x = pos.x;
+        ray.pos.y = pos.y;
+        ray.dir = dir;
+        return ray;
+    } 
 
     if (dir.theta == 0.5 * PI) {
         ray.pos.y = wall.bottom;
@@ -48,18 +56,33 @@ Ray cast_ray(Position pos, Direction dir)
             // ray.pos.x = wall.left;
             ray.pos.y = 1 / tan(1.5 * PI - dir.theta) * (wall.left - pos.x) + pos.y;
         }
+        // we do a little recursion, it's called we do a little recursion
         if (ray.pos.x > wall.right) {
             ray.pos.x = wall.right;
-            println("%d\n", worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID)]); // determines wall or not
-        } else if (ray.pos.x < wall.left) {
+            if (worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID)] == 0) {
+                return cast_ray(ray.pos, dir);
+            }
+            
+        } else if (ray.pos.x <= wall.left) {
             ray.pos.x = wall.left;
-            println("%d\n", worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID) - 1]);
+            if (worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID) - 1] == 0) {
+                // puts new ray position to **just** outside current grid, otherwise infinite recursion
+                ray.pos.x -= PIXEL;
+                return cast_ray(ray.pos, dir);
+            }
+
         } else if (ray.pos.y > wall.bottom) {
             ray.pos.y = wall.bottom;
-            println("%d\n", worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID)]);
+            if (worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID)] == 0) {
+                return cast_ray(ray.pos, dir);
+            }
+
         } else {
             ray.pos.y = wall.top;
-            println("%d\n", worldMap[(int)ray.pos.y / GRID - 1][((int)ray.pos.x / GRID)]);
+            if(worldMap[(int)ray.pos.y / GRID - 1][((int)ray.pos.x / GRID)] == 0) {
+                ray.pos.y -= PIXEL;
+                return cast_ray(ray.pos, dir);
+            }
         }
     }
     return ray;

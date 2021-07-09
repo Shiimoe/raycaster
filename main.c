@@ -1,7 +1,5 @@
+#define ENTRY_FUNCTION init
 #include "header.h"
-#include "init.c"
-#include "controls.c"
-#include "player.c"
 
 
 ierr init(Arguments args) {
