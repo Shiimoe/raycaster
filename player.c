@@ -63,24 +63,24 @@ Ray cast_ray(Position pos, Direction dir)
         // we do a little recursion, it's called we do a little recursion
         if (ray.pos.x > wall.right) {
             ray.pos.x = wall.right;
-            if (worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID)] == 0) {
+            if (WORLD_MAP[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID)] == 0) {
                 return cast_ray(ray.pos, dir);
             }
         } else if (ray.pos.x < wall.left) {
             ray.pos.x = wall.left;
-            if (worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID) - 1] == 0) {
+            if (WORLD_MAP[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID) - 1] == 0) {
                 // puts new ray position to **just** outside current grid, otherwise infinite recursion
                 ray.pos.x -= PIXEL;
                 return cast_ray(ray.pos, dir);
             }
         } else if (ray.pos.y > wall.bottom) {
             ray.pos.y = wall.bottom;
-            if (worldMap[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID)] == 0) {
+            if (WORLD_MAP[(int)ray.pos.y / GRID][((int)ray.pos.x / GRID)] == 0) {
                 return cast_ray(ray.pos, dir);
             }
         } else {
             ray.pos.y = wall.top;
-            if(worldMap[(int)ray.pos.y / GRID - 1][((int)ray.pos.x / GRID)] == 0) {
+            if(WORLD_MAP[(int)ray.pos.y / GRID - 1][((int)ray.pos.x / GRID)] == 0) {
                 ray.pos.y -= PIXEL;
                 return cast_ray(ray.pos, dir);
             }

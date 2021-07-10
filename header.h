@@ -3,11 +3,14 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include <math.h>
 
 #define whilst while
+#define FPS 60
 #define SPEED 250
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 800
@@ -16,15 +19,20 @@
 #define PI 3.14159265
 #define GRID 100
 #define PIXEL 1
-#define FOV 90
+#define FOV 120
 
-static const int worldMap[MAP_WIDTH][MAP_HEIGHT] = {
+#define WALL_COLOUR 75, 75, 102
+#define FLOOR_COLOUR 117, 117, 143
+#define DRAW_COLOUR WALL_COLOUR
+#define LINE_COLOUR 147, 147, 193
+
+static const ifast WORLD_MAP[MAP_WIDTH][MAP_HEIGHT] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 1, 0, 0, 1, 0, 1},
+	{1, 0, 1, 0, 0, 1, 0, 1},
 	{1, 0, 1, 0, 0, 1, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 1, 0, 0, 1},
+	{1, 0, 0, 1, 1, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
 	{1, 1, 1, 1, 1, 1, 1, 1}
 };
@@ -86,6 +94,7 @@ typedef struct Ray {
 /////// FUNCTIONS
 // must define prototype first
 int sdl2_init();
+u0 keys(Input *, bool *);
 void detection();
 SDL_Rect centrePlayer(SDL_Rect, Position);
 static inline int sgn(int a) {
@@ -94,3 +103,12 @@ static inline int sgn(int a) {
     return -1;
 }
 Ray cast_ray(Position, Direction);
+
+static inline void correct_theta(f64 *theta)
+{
+    if (*theta < 0) {
+        *theta += 2 * PI;
+    } else if (*theta >= 2 * PI) {
+        *theta -= 2 * PI;
+    }
+}

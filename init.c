@@ -23,6 +23,8 @@ int sdl2_init(SDL_Context *ctx) {
 		SDL_Quit();
 		return !OK;
 	}
+	// set blend mode for alpha values.
+	SDL_SetRenderDrawBlendMode(ctx->rend, SDL_BLENDMODE_BLEND);
 
 	// loading an image into memory
 	ctx->femboy.surface = IMG_Load("watermelon.png");
