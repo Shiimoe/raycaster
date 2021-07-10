@@ -1,11 +1,11 @@
-# raycaster
-Raycaster built in C using SDL, works on my machine
+# Raycaster
 
-# dependencies
-```
-sdl2
-sdl2_image
-sdl2_TTF
-```
-[crelude](https://github.com/Demonstrandum/crelude)
+Raycaster built in C using SDL, works on my machine.
+
+# Dependencies
+
+- `sdl2`
+- `sdl2_image`
+- `sdl2_TTF`
+- [`crelude`](https://github.com/Demonstrandum/crelude)
 
