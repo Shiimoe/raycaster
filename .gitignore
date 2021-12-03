@@ -1,2 +1,7 @@
 *.o
 main
+*.o.json
+*.json
+*.txt
+.cache/
+.vscode/

@@ -48,8 +48,7 @@ typedef struct Sprite {
 typedef struct SDL_Context {
     SDL_Window *win;
     SDL_Renderer *rend;
-    Sprite football;
-    Sprite femboy;
+    Sprite player;
 } SDL_Context;
 
 typedef enum Input {
@@ -104,8 +103,9 @@ static inline int sgn(int a) {
 }
 Ray cast_ray(Position, Direction);
 
-static inline void correct_theta(f64 *theta)
-{
+void collision(Position *, Direction *);
+
+static inline void correct_theta(f64 *theta) {
     if (*theta < 0) {
         *theta += 2 * PI;
     } else if (*theta >= 2 * PI) {

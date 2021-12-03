@@ -9,8 +9,8 @@ int sdl2_init(SDL_Context *ctx) {
 	ctx->win = SDL_CreateWindow("Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	// check if the window inited without error
 	unless (ctx->win) {
-		printf("error creating window :%s\n", SDL_GetError()); 
-		SDL_Quit(); 
+		printf("error creating window :%s\n", SDL_GetError());
+		SDL_Quit();
 		return !OK;
 	}
 
@@ -27,8 +27,8 @@ int sdl2_init(SDL_Context *ctx) {
 	SDL_SetRenderDrawBlendMode(ctx->rend, SDL_BLENDMODE_BLEND);
 
 	// loading an image into memory
-	ctx->femboy.surface = IMG_Load("watermelon.png");
-	unless (ctx->femboy.surface) {
+	ctx->player.surface = IMG_Load("watermelon.png");
+	unless (ctx->player.surface) {
 		println("error creating surface:%s.", SDL_GetError());
 		SDL_DestroyRenderer(ctx->rend);
 		SDL_DestroyWindow(ctx->win);
@@ -37,16 +37,14 @@ int sdl2_init(SDL_Context *ctx) {
 	}
 
 	// loading the image into VRAM
-	ctx->femboy.texture = SDL_CreateTextureFromSurface(ctx->rend, ctx->femboy.surface);
-	SDL_FreeSurface(ctx->femboy.surface); // surface is no longer needed, free it to save memory
-	unless (ctx->femboy.texture) {
+	ctx->player.texture = SDL_CreateTextureFromSurface(ctx->rend, ctx->player.surface);
+	SDL_FreeSurface(ctx->player.surface); // surface is no longer needed, free it to save memory
+	unless (ctx->player.texture) {
 		printf("error creating texture:%s\n", SDL_GetError());
 		SDL_DestroyRenderer(ctx->rend);
 		SDL_DestroyWindow(ctx->win);
 		SDL_Quit();
 		return !OK;
 	}
-    ctx->football.surface = SDL_LoadBMP("football.bmp");
-	ctx->football.texture = SDL_CreateTextureFromSurface(ctx->rend, ctx->football.surface);
     return OK;
 }
